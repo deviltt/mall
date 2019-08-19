@@ -24,6 +24,7 @@ public class ServerResponseBody<T> implements Serializable {
     }
 
     private ServerResponseBody(int status, T data) {
+        this.status = status;
         this.data = data;
     }
 
@@ -56,31 +57,40 @@ public class ServerResponseBody<T> implements Serializable {
         return data;
     }
 
+    /**
+     * 默认无参数只返回一个状态
+     * @param <T> 泛型
+     * @return 实例中只包含状态信息
+     */
     public static <T> ServerResponseBody<T> createBySuccess() {
         return new ServerResponseBody<>(ResponseStatus.SUCCESS.getStatus());
     }
 
-    public static <T> ServerResponseBody<T> createBySuccessMessage(String msg){
+    public static <T> ServerResponseBody<T> createBySuccessMessage(String msg) {
         return new ServerResponseBody<>(ResponseStatus.SUCCESS.getStatus(), msg);
     }
 
-    public static <T> ServerResponseBody<T> createBySuccess(T data){
+    public static <T> ServerResponseBody<T> createBySuccess(T data) {
         return new ServerResponseBody<>(ResponseStatus.SUCCESS.getStatus(), data);
     }
 
-    public static <T> ServerResponseBody<T> createBySuccess(String msg, T data){
+    public static <T> ServerResponseBody<T> createBySuccess(String msg, T data) {
         return new ServerResponseBody<>(ResponseStatus.SUCCESS.getStatus(), msg, data);
     }
 
-    public static <T> ServerResponseBody<T> createByError(){
+    public static <T> ServerResponseBody<T> createByError() {
         return new ServerResponseBody<>(ResponseStatus.ERROR.getStatus());
     }
 
-    public static <T> ServerResponseBody<T> createByError(String msg){
+    public static <T> ServerResponseBody<T> createByError(String msg) {
         return new ServerResponseBody<>(ResponseStatus.ERROR.getStatus(), msg);
     }
 
-    public static <T> ServerResponseBody<T> createByError(int errorStatus, String errorMsg){
+    public static <T> ServerResponseBody<T> createByError(int errorStatus, String errorMsg) {
         return new ServerResponseBody<>(errorStatus, errorMsg);
+    }
+
+    public static <T> ServerResponseBody<T> createByErrorMessage(String msg) {
+        return new ServerResponseBody<>(ResponseStatus.ERROR.getStatus(), msg);
     }
 }
